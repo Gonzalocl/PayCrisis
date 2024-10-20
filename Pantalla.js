@@ -15,6 +15,9 @@ function Pantalla_Crea(titulo, w, h) {
     canvas = document.createElement("canvas");
     canvas.width = w;
     canvas.height = h;
+    canvas.style.position = "relative";
+    canvas.style.left = "calc((100% - " + w + "px)/2)";
+    canvas.style.top = "calc((100% - " + h + "px)/2)";
     canvas.style.background = "black";
     document.body.appendChild(canvas);
     ctx = canvas.getContext("2d");
