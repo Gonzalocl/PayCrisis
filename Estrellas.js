@@ -1,74 +1,74 @@
-#include "Estrellas.h"
-#include <stdlib.h>
-#include "Estrella.h"
-#include "Colision.h"
-
-struct EstrellasRep {
-	Estrella* e;
-	int n, maximo; // n: no es el Elemento actual es el numero de estrellas en el array
-};
 
 
-Estrellas Estrellas_Crea(int maximo) {
-	Estrellas e = malloc(sizeof( struct EstrellasRep ));
 
-	e->e = malloc(maximo * sizeof(Estrella));
-	e->n = 0;
-	e->maximo = maximo;
+
+
+class Estrellas {
+	e;
+	n; maximo; // n: no es el Elemento actual es el numero de estrellas en el array
+}
+
+
+function Estrellas_Crea(maximo) {
+	let e = new Estrellas();
+
+	e.e = [];
+	e.n = 0;
+	e.maximo = maximo;
 
 	return e;
 }
 
 
-void Estrellas_Libera(Estrellas e) {
-	for (int i = 0; i < e->n; i++) {
-		Estrella_Libera(e->e[i]);
+function Estrellas_Libera(e) {
+	for (let i = 0; i < e.n; i++) {
+		Estrella_Libera(e.e[i]);
 	}
 
-	free(e->e);
-	free(e);
+
+
 }
 
 
-void Estrellas_Dibuja(Estrellas e) {
-	for (int i = 0; i < e->n; i++) Estrella_Dibuja(e->e[i]);
+function Estrellas_Dibuja(e) {
+	for (let i = 0; i < e.n; i++) Estrella_Dibuja(e.e[i]);
 }
 
-void Estrellas_Inicializa(Estrellas e) {
-	for (int i = 0; i < e->maximo; i++) {
-		e->e[i] = NULL;
+function Estrellas_Inicializa(e) {
+	for (let i = 0; i < e.maximo; i++) {
+		e.e[i] = undefined;
 	}
 }
 
 
-int Estrellas_Colision(Estrellas e, int x, int y, int w, int h) {
-	int contador = 0;
+function Estrellas_Colision(e, x, y, w, h) {
+	let contador = 0;
 
-	for (int i = 0; i < e->n; i++) {
-		if ( Colision(Estrella_X(e->e[i]), Estrella_Y(e->e[i]), Estrella_W(e->e[i]), Estrella_H(e->e[i]), x, y, w, h) ) {
+	for (let i = 0; i < e.n; i++) {
+		if ( Colision(Estrella_X(e.e[i]), Estrella_Y(e.e[i]), Estrella_W(e.e[i]), Estrella_H(e.e[i]), x, y, w, h) ) {
 			contador++;
-			Estrella_Libera(e->e[i]);
-			e->e[i] = NULL;
+			Estrella_Libera(e.e[i]);
+			e.e[i] = undefined;
 		}
 	}
 	// Reordeno
-	int nulos = contador;
-	int i = 0;
-	int j = e->maximo - 1;
-	while ((j > i) && (nulos != 0)) {
+	let nulos = contador;
+	let i = 0;
+	let j = e.maximo - 1;
+	while ((j > i) && (nulos !== 0)) {
 		// Encontramos el Primer NULL
-		while ((j > i) && (e->e[i] != NULL)) {
+		while ((j > i) && (e.e[i] !== undefined)) {
 
 			i++;
 		}
 		// Encontramos las primera estrella
-		while ((j > i) && (e->e[j] == NULL)) {
+		while ((j > i) && (e.e[j] === undefined)) {
 			j--;
 		}
 		// En este estado: Hemos encontrado una Estrella o Esta todo ordenado
 		if (j > i) {
-			e->e[i] = e->e[j];
-			e->e[j] = NULL;
+			e.e[i] = e.e[j];
+			e.e[j] = undefined;
 
 		}
 
@@ -77,14 +77,14 @@ int Estrellas_Colision(Estrellas e, int x, int y, int w, int h) {
 		nulos--;
 	}
 
-	e->n = e->n - contador;
+	e.n = e.n - contador;
 	return contador;
 }
 
 
-void Estrellas_Inserta(Estrellas e, Imagen i, int x, int y, int w, int h) {
-	if (e->n < e->maximo) {
-		e->e[e->n] = Estrella_Crea(i, x, y, w, h);
-		e->n++;
+function Estrellas_Inserta(e, i, x, y, w, h) {
+	if (e.n < e.maximo) {
+		e.e[e.n] = Estrella_Crea(i, x, y, w, h);
+		e.n++;
 	}
 }

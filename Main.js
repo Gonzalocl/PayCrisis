@@ -1,24 +1,24 @@
-#include "Pantalla.h"
-#include "Personaje.h"
-#include "Enemigos.h"
-#include "Municion.h"
-#include "Estrellas.h"
-#include "Miscelanea.h"
 
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
-#include <stdio.h>
 
-#define PANT_W 800
-#define PANT_H 480
-#define FPS 30
-#define P_W 25
-#define P_H 25
-#define ES_W 24
-#define ES_H 23
-#define EN_W 25
-#define EN_H 18
+
+
+
+
+
+
+
+
+
+
+const PANT_W = 800
+const PANT_H = 480
+const FPS = 30
+const P_W = 25
+const P_H = 25
+const ES_W = 24
+const ES_H = 23
+const EN_W = 25
+const EN_H = 18
 
 /**
 	\mainpage La aplicación es una versión modificada del antiguo videojuego Space Invaders.
@@ -27,58 +27,58 @@
 */
 
 
-int main(int argc, char* argv[]) {
+async function main(argc, argv) {
 	// Inicio y Carga
-	srand(time(NULL));
+
 	Pantalla_Crea("PayCrisis", 800, 480);
 
-	Imagen img0 = Pantalla_ImagenLee("Inicio.bmp", 255);
-	Imagen img1 = Pantalla_ImagenLee("Spacex.bmp", 255);
-	Imagen img_player = Pantalla_ImagenLee("Player.bmp", 255);
-	Imagen img_enemy = Pantalla_ImagenLee("Enemy.bmp", 255);
-	Imagen img_star = Pantalla_ImagenLee("Star.bmp", 255);
+	let img0 = await Pantalla_ImagenLee("Inicio.bmp", 255);
+	let img1 = await Pantalla_ImagenLee("Spacex.bmp", 255);
+	let img_player = await Pantalla_ImagenLee("Player.bmp", 255);
+	let img_enemy = await Pantalla_ImagenLee("Enemy.bmp", 255);
+	let img_star = await Pantalla_ImagenLee("Star.bmp", 255);
 
 	// Creacion de Estructuras
-	Personaje player = Personaje_Crea(img_player, rand() % (PANT_W - P_W), PANT_H - P_H, P_W, P_H );
-	Estrellas stars = Estrellas_Crea(20);
-	Enemigos enemies = Enemigos_Crea();
-	Municion ammo = Municion_Crea();
+	let player = Personaje_Crea(img_player, rand() % (PANT_W - P_W), PANT_H - P_H, P_W, P_H );
+	let stars = Estrellas_Crea(20);
+	let enemies = Enemigos_Crea();
+	let ammo = Municion_Crea();
 
 
 	// 1er evento. Acabado
-	double alpha = 0;
-	while ( Pantalla_Activa() && !Pantalla_TeclaPulsada(SDL_SCANCODE_SPACE)) {
+    let alpha = 0;
+	function Loop0() { if ( Pantalla_Activa() && !Pantalla_TeclaPulsada(SDL_SCANCODE_SPACE)) {
 		// Renderizado
 		Pantalla_DibujaImagen(img0, 0, 0, PANT_W, PANT_H);
 
-		Pantalla_ColorTrazo(206, 206, 206, 128 + 127*sin(alpha));
+		Pantalla_ColorTrazo(206, 206, 206, 128 + 127*Math.sin(alpha));
 		alpha = RAD(5, alpha);
 		Pantalla_DibujaTexto("Pulsa [SPACE]", PANT_W/2 - 55, 3*PANT_H/5);
 
 		Pantalla_Actualiza();
-		Pantalla_Espera(FPS);
-	}
+		setTimeout(Loop0, FPS);
+	} else {
 
 	// Borrado
 	Pantalla_DibujaRellenoFondo(0,0,0,0);
 
 
 	// 2o Evento
-	int t0 = time(NULL);// Tiempo en el instante en el que empezo el evento
-	int t1;				// Tiempo al inicio del evento
-	int dt = 0;			// Diferencia entre t0 y t1: Tiempo pasado desde que empezo el evento
+	let t0 = time();	// Tiempo en el instante en el que empezo el evento
+	let t1;				// Tiempo al inicio del evento
+	let dt = 0;			// Diferencia entre t0 y t1: Tiempo pasado desde que empezo el evento
 
-	int puntos = 0;		// Puntos al coger estrellas
-	int muertes = 0;	// Puntos al matar enemigos
-	char puntuacion[40];// Cadena para imprimir el total de puntos: dt = dt + puntos + muertes
-	int salir = 0;		// Condicion de salida. Si choca contra un enemigo
-	int controlMunicion = 0;	// Control Municion
+	let puntos = 0;		// Puntos al coger estrellas
+	let muertes = 0;	// Puntos al matar enemigos
+	let puntuacion;		// Cadena para imprimir el total de puntos: dt = dt + puntos + muertes
+	let salir = 0;		// Condicion de salida. Si choca contra un enemigo
+	let controlMunicion = 0;	// Control Municion
 
 	Estrellas_Inicializa(stars);
-	while ( Pantalla_Activa() && !Pantalla_TeclaPulsada(SDL_SCANCODE_RETURN) && !salir) {
-		t1 = time(NULL);
+	function Loop1() { if ( Pantalla_Activa() && !Pantalla_TeclaPulsada(SDL_SCANCODE_RETURN) && !salir) {
+		t1 = time();
 		dt = t1 - t0 + puntos + muertes;
-		sprintf(puntuacion, "%d", dt);
+		puntuacion = dt;
 
 		// Control del Usuario y Enemigo
 		Personaje_Mueve(player);
@@ -87,15 +87,15 @@ int main(int argc, char* argv[]) {
 
 		// Insertar Balas
 		if ( Pantalla_TeclaPulsada(SDL_SCANCODE_SPACE) ) {
-			if (controlMunicion == 1) {
+			if (controlMunicion === 1) {
 				Municion_Dispara(ammo, Personaje_X(player) + 12, Personaje_Y(player), 8);
 				controlMunicion = 0;
 			}
 		}
 		else {controlMunicion = 1;}
 
-        if (rand() % 50 == 0) Estrellas_Inserta(stars, img_star, rand() % (PANT_W - ES_W), rand() % (PANT_H - ES_H), ES_W, ES_H);
-        if (rand() % 100 == 0) Enemigos_Inserta(enemies, img_enemy, rand() % (PANT_W - EN_W), 0, EN_W, EN_H, -6 + (rand() % 13), -6 + (rand() % 13));
+        if (rand() % 50 === 0) Estrellas_Inserta(stars, img_star, rand() % (PANT_W - ES_W), rand() % (PANT_H - ES_H), ES_W, ES_H);
+        if (rand() % 100 === 0) Enemigos_Inserta(enemies, img_enemy, rand() % (PANT_W - EN_W), 0, EN_W, EN_H, -6 + (rand() % 13), -6 + (rand() % 13));
 
 		// Colisiones
 		puntos = puntos + 5*Estrellas_Colision(stars, Personaje_X(player), Personaje_Y(player), Personaje_W(player), Personaje_H(player));
@@ -116,37 +116,37 @@ int main(int argc, char* argv[]) {
 
 
 		Pantalla_Actualiza();
-		Pantalla_Espera(FPS);
-	}
+		setTimeout(Loop1, FPS);
+	} else {
 
 	// Borrado
 	Pantalla_DibujaRellenoFondo(15,15,15,15);
 
 	// Guardar Partida
-	FILE* f = fopen("Puntuacion.txt", "r");
-	int record = 0;
-	if (f != NULL)
+	let f = document.cookie;
+	let record = 0;
+	if (f !== undefined)
     {
-        fscanf(f, "%d", &record);
-        fclose(f);
+		record = f;
+
     }
 
 	if (dt > record) {
-		f = fopen("Puntuacion.txt", "w");
-		fprintf(f, "%d", dt);
-		fclose(f);
+
+		document.cookie = dt;
+
 	}
 
 	// Pantalla final
 	// Imprimir puntuacion, numero de estrellas, enemigos y tiempo real
-	char tiempo[40];
-	char n_estrellas[40];
-	char n_enemigos[40];
+	let tiempo;
+	let n_estrellas;
+	let n_enemigos;
 
-	sprintf(tiempo, "%d", dt - puntos - muertes);
-	sprintf(n_estrellas, "%d", puntos/5);
-	sprintf(n_enemigos, "%d", muertes/10);
-	while ( Pantalla_Activa() && !Pantalla_TeclaPulsada(SDL_SCANCODE_ESCAPE)) {
+	tiempo = dt - puntos - muertes;
+	n_estrellas = puntos/5
+	n_enemigos = muertes/10;
+	function Loop2() { if ( Pantalla_Activa() && !Pantalla_TeclaPulsada(SDL_SCANCODE_ESCAPE)) {
 
 		Pantalla_ColorTrazo(255, 255, 255, 255);
 		Pantalla_DibujaTexto("Puntuacion:", PANT_W/2 - 120, PANT_H/2 - 56);
@@ -171,8 +171,8 @@ int main(int argc, char* argv[]) {
 		}
 
 		Pantalla_Actualiza();
-		Pantalla_Espera(FPS);
-	}
+		setTimeout(Loop2, FPS);
+	} else {
 
 	// Liberar Estructuras
 	Personaje_Libera(player);
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
 	Pantalla_ImagenLibera(img_player);
 	Pantalla_ImagenLibera(img_enemy);
 	Pantalla_ImagenLibera(img_star);
-	Pantalla_Libera();
+	Pantalla_Libera(); }} Loop2(); }} Loop1(); }} Loop0();
 
 	return 0;
 }

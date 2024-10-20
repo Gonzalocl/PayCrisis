@@ -1,46 +1,46 @@
-#include "Estrella.h"
-#include "Pantalla.h"
-#include <stdlib.h>
 
 
-struct EstrellaRep {
-	int x,y,w,h;
-	Imagen imagen;
-};
 
-Estrella Estrella_Crea(Imagen i, int x, int y, int w, int h) {
-	Estrella e = malloc(sizeof( struct EstrellaRep ));
 
-	e->imagen = i;
-	e->x = x; // RAND
-	e->y = y; // RAND
-	e->w = w;
-	e->h = h;
+
+class Estrella {
+	x;y;w;h;
+	imagen;
+}
+
+function Estrella_Crea(i, x, y, w, h) {
+	let e = new Estrella();
+
+	e.imagen = i;
+	e.x = x; // RAND
+	e.y = y; // RAND
+	e.w = w;
+	e.h = h;
 
 	return e;
 }
 
-void Estrella_Libera(Estrella e) {
-	free(e);
+function Estrella_Libera(e) {
+
 }
 
-void Estrella_Dibuja(Estrella e) {
-	Pantalla_DibujaImagen(e->imagen, e->x, e->y, e->w, e->h);
+function Estrella_Dibuja(e) {
+	Pantalla_DibujaImagen(e.imagen, e.x, e.y, e.w, e.h);
 }
 
 
-int Estrella_X(Estrella e) {
-	return e->x;
+function Estrella_X(e) {
+	return e.x;
 }
 
-int Estrella_Y(Estrella e) {
-	return e->y;
+function Estrella_Y(e) {
+	return e.y;
 }
 
-int Estrella_W(Estrella e) {
-	return e->w;
+function Estrella_W(e) {
+	return e.w;
 }
 
-int Estrella_H(Estrella e) {
-	return e->h;
+function Estrella_H(e) {
+	return e.h;
 }
