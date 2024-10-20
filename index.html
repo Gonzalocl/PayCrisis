@@ -1,0 +1,36 @@
+<style>
+    html {
+        overflow: hidden;
+        overscroll-behavior: none;
+    }
+</style>
+<script>
+	const SDL_BUTTON_LEFT = 0;
+	const SDL_SCANCODE_SPACE = "Space";
+	const SDL_SCANCODE_ESCAPE = "Escape";
+	const SDL_SCANCODE_RETURN = "Enter";
+	const SDL_SCANCODE_RIGHT = "ArrowRight";
+	const SDL_SCANCODE_LEFT = "ArrowLeft";
+	const SDL_SCANCODE_UP = "ArrowUp";
+	const SDL_SCANCODE_DOWN = "ArrowDown";
+
+	function rand() {
+		return Math.floor(Math.random() * 65536);
+	}
+
+	function time() {
+		return Math.floor(Date.now()/1000);
+	}
+</script>
+<script src="Bala.js"></script>
+<script src="Colision.js"></script>
+<script src="Enemigo.js"></script>
+<script src="Enemigos.js"></script>
+<script src="Estrella.js"></script>
+<script src="Estrellas.js"></script>
+<script src="Main.js"></script>
+<script src="Miscelanea.js"></script>
+<script src="Municion.js"></script>
+<script src="Pantalla.js"></script>
+<script src="Personaje.js"></script>
+<script async src="main.js"></script>
