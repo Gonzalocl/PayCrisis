@@ -1,11 +1,9 @@
-# Compile
 
-- Install GCC.
-- Install SDL2.
+# PayCrisis
 
-```
-bash Compile.sh
-```
+Small game about shooting enemy spaceships.
+
+Website: <https://paycrisis.gonzalocaparros.eu.org/>
 
 # Screenshots
 
