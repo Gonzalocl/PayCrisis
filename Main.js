@@ -123,7 +123,7 @@ async function main(argc, argv) {
 	Pantalla_DibujaRellenoFondo(15,15,15,15);
 
 	// Guardar Partida
-	let f = document.cookie;
+	let f = getCookie("puntuacion");
 	let record = 0;
 	if (f !== undefined)
     {
@@ -133,7 +133,7 @@ async function main(argc, argv) {
 
 	if (dt > record) {
 
-		document.cookie = dt;
+		setCookie("puntuacion", dt, 31536000);
 
 	}
 
